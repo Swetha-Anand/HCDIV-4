@@ -38,8 +38,8 @@
     .attr("viewBox", `0 0 ${width} ${height}`);
 
   Promise.all([
-    d3.json("data/geo.json"),   // Adjusted for data files hosted locally
-    d3.csv("data/population.csv")
+    d3.json("data/sgmap.json"),   // Adjusted for data files hosted locally
+    d3.csv("data/population2023.csv")
   ]).then(data => {
     let mapData = data[0].features;
     let popData = data[1];

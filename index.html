@@ -11,19 +11,20 @@
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #ffffff; /* White background for the page */
+      background-color: #ffffff; /* White background */
     }
 
     h1 {
-      padding: 20px 30px; /* Reduced padding for the heading */
+      padding: 20px 30px;
+      margin: 0;
       color: #333;
       font-size: 2.5em;
     }
 
     svg {
       display: block;
-      margin: 10px auto 20px; /* Map moved much closer to the heading */
-      width: 80%;
+      margin: 0 auto;
+      width: 80%; /* Map is now 80% of the page width */
       height: auto;
     }
 
@@ -40,8 +41,8 @@
 
     #legend {
       position: absolute;
-      top: 75%; /* Pulled down further */
-      right: 30%; /* Adjusted to stay closer to the right */
+      top: 60%;
+      right: 10%;
       transform: translateY(-50%);
       background: rgba(255, 255, 255, 0.8);
       padding: 15px;
@@ -69,15 +70,15 @@
 
 <h1>Singapore Population Density Map</h1>
 
-<svg width="1000" height="700" viewBox="0 0 1000 700"></svg>
+<svg></svg>
 
 <div id="info"></div>
 <div id="legend">
-  <div class="legend-item"><div class="legend-color" style="background-color: #004b87;"></div>Very Low Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #0064a0;"></div>Low Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #007bb8;"></div>Medium Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #00a1d1;"></div>Medium-High Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #00b8e6;"></div>High Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #002f4b;"></div>Very Low Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #003a5c;"></div>Low Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #00456d;"></div>Medium Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #00527f;"></div>Medium-High Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #006191;"></div>High Population</div>
 </div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -86,7 +87,7 @@
 
   const colorScale = d3.scaleThreshold()
     .domain([5000, 10000, 20000, 50000])
-    .range(["#004b87", "#0064a0", "#007bb8", "#00a1d1", "#00b8e6"]); /* Blue monotone color scheme */
+    .range(["#002f4b", "#003a5c", "#00456d", "#00527f", "#006191"]); /* Darker blue monotone colors */
 
   const svg = d3.select("svg")
     .attr("viewBox", `0 0 ${width} ${height}`);

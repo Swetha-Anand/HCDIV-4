@@ -38,8 +38,8 @@
     .attr("viewBox", `0 0 ${width} ${height}`);
 
   Promise.all([
-    d3.json("data/geo.json"),
-    d3.csv("data/population.csv")
+    d3.json("geo.json"),
+    d3.csv("population.csv")
   ]).then(data => {
     let mapData = data[0].features;
     let popData = data[1];

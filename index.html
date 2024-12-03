@@ -15,15 +15,15 @@
     }
 
     h1 {
-      padding: 30px; /* More padding for the heading */
+      padding: 20px 30px; /* Reduced padding for the heading */
       color: #333;
       font-size: 2.5em;
     }
 
     svg {
       display: block;
-      margin: 30px auto 20px; /* Move map up closer to the heading */
-      width: 80%;
+      margin: 10px auto 20px; /* Map moved much closer to the heading */
+      width: 95%;
       height: auto;
     }
 
@@ -40,8 +40,8 @@
 
     #legend {
       position: absolute;
-      top: 90%;
-      right: 10%; /* Closer to the right but still visible */
+      top: 65%; /* Pulled down further */
+      right: 10%; /* Adjusted to stay closer to the right */
       transform: translateY(-50%);
       background: rgba(255, 255, 255, 0.8);
       padding: 15px;
@@ -73,11 +73,11 @@
 
 <div id="info"></div>
 <div id="legend">
-  <div class="legend-item"><div class="legend-color" style="background-color: #3b3b3b;"></div>Very Low Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #595959;"></div>Low Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #737373;"></div>Medium Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #8c8c8c;"></div>Medium-High Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #a6a6a6;"></div>High Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #004b87;"></div>Very Low Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #0064a0;"></div>Low Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #007bb8;"></div>Medium Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #00a1d1;"></div>Medium-High Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #00b8e6;"></div>High Population</div>
 </div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -86,14 +86,14 @@
 
   const colorScale = d3.scaleThreshold()
     .domain([5000, 10000, 20000, 50000])
-    .range(["#3b3b3b", "#595959", "#737373", "#8c8c8c", "#a6a6a6"]);
+    .range(["#004b87", "#0064a0", "#007bb8", "#00a1d1", "#00b8e6"]); /* Blue monotone color scheme */
 
   const svg = d3.select("svg")
     .attr("viewBox", `0 0 ${width} ${height}`);
 
   Promise.all([
-    d3.json("geo.json"),
-    d3.csv("population.csv")
+    d3.json("data/geo.json"),
+    d3.csv("data/population.csv")
   ]).then(([geoData, popData]) => {
     geoData.features.forEach(d => {
       const subzone = popData.find(e => e.Subzone.toUpperCase() === d.properties.Name);

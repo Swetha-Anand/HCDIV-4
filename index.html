@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Singapore Map</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    #info {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: white;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+    svg {
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+
+<svg width="1000" height="600" viewBox="0 0 1000 600"></svg>
+<div id="info"></div> <!-- Info box for population on hover -->
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+  let width = 1000, height = 600;
+
+  let svg = d3.select("svg")
+    .attr("viewBox", `0 0 ${width} ${height}`);
+
+  Promise.all([
+    d3.json("data/geo.json"),   // Adjusted for data files hosted locally
+    d3.csv("data/population.csv")
+  ]).then(data => {
+    let mapData = data[0].features;
+    let popData = data[1];
+
+    mapData.forEach(d => {
+      let subzone = popData.find(e => e.Subzone.toUpperCase() === d.properties.Name);
+      d.popdata = subzone ? parseInt(subzone.Population) : 0;
+    });
+
+    let projection = d3.geoMercator()
+      .center([103.851959, 1.290270])
+      .fitExtent([[20, 20], [980, 580]], data[0]);
+
+    let geopath = d3.geoPath().projection(projection);
+
+    svg.append("g")
+      .attr("id", "districts")
+      .selectAll("path")
+      .data(mapData)
+      .enter()
+      .append("path")
+      .attr("d", geopath)
+      .attr("stroke", "black")
+      .attr("fill", "lightgrey")
+      .on("mouseover", function(event, d) {
+        let population = d.popdata || "Data not available";
+        d3.select("#info")
+          .style("display", "block")
+          .html(`<strong>${d.properties.Name}</strong><br>Population: ${population}`)
+          .style("left", `${event.pageX}px`)
+          .style("top", `${event.pageY}px`);
+      })
+      .on("mouseout", function() {
+        d3.select("#info").style("display", "none");
+      });
+  });
+</script>
+
+</body>
+</html>

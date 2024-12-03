@@ -5,36 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Singapore Population Density Map</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f0f0f0;
+      background-color: #1e1e1e;
     }
 
     h1 {
-      text-align: center;
-      margin: 20px 0;
-      color: #333;
-    }
-
-    #map-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      text-align: left;
       padding: 20px;
+      color: #fff;
+      font-size: 2em;
     }
 
     svg {
-      border: 1px solid #ccc;
+      display: block;
+      margin: auto;
     }
 
     #info {
       position: absolute;
-      background-color: white;
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 300;
       display: none;
     }
 
@@ -42,11 +41,11 @@
       position: absolute;
       bottom: 20px;
       left: 20px;
-      background: white;
+      background: rgba(255, 255, 255, 0.1);
       padding: 10px;
       border-radius: 5px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
       font-size: 12px;
+      color: #fff;
     }
 
     .legend-item {
@@ -59,6 +58,7 @@
       width: 20px;
       height: 20px;
       margin-right: 10px;
+      border: 1px solid #fff;
     }
   </style>
 </head>
@@ -66,17 +66,15 @@
 
 <h1>Singapore Population Density Map</h1>
 
-<div id="map-container">
-  <svg width="1000" height="700" viewBox="0 0 1000 700"></svg>
-</div>
+<svg width="1000" height="700" viewBox="0 0 1000 700"></svg>
 
 <div id="info"></div>
 <div id="legend">
-  <div class="legend-item"><div class="legend-color" style="background-color: #d73027;"></div>High Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #f46d43;"></div>Medium-High Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #fee08b;"></div>Medium Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #d9ef8b;"></div>Low Population</div>
-  <div class="legend-item"><div class="legend-color" style="background-color: #1a9850;"></div>Very Low Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #3b3b3b;"></div>Very Low Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #595959;"></div>Low Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #737373;"></div>Medium Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #8c8c8c;"></div>Medium-High Population</div>
+  <div class="legend-item"><div class="legend-color" style="background-color: #a6a6a6;"></div>High Population</div>
 </div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -85,7 +83,7 @@
 
   const colorScale = d3.scaleThreshold()
     .domain([5000, 10000, 20000, 50000])
-    .range(["#1a9850", "#d9ef8b", "#fee08b", "#f46d43", "#d73027"]);
+    .range(["#3b3b3b", "#595959", "#737373", "#8c8c8c", "#a6a6a6"]);
 
   const svg = d3.select("svg")
     .attr("viewBox", `0 0 ${width} ${height}`);
@@ -110,7 +108,7 @@
       .enter()
       .append("path")
       .attr("d", path)
-      .attr("stroke", "#333")
+      .attr("stroke", "#fff")
       .attr("fill", d => colorScale(d.properties.population))
       .on("mouseover", (event, d) => {
         d3.select("#info")

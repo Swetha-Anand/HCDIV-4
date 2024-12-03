@@ -23,7 +23,7 @@
     svg {
       display: block;
       margin: 10px auto 20px; /* Map moved much closer to the heading */
-      width: 95%;
+      width: 80%;
       height: auto;
     }
 
@@ -40,8 +40,8 @@
 
     #legend {
       position: absolute;
-      top: 65%; /* Pulled down further */
-      right: 10%; /* Adjusted to stay closer to the right */
+      top: 75%; /* Pulled down further */
+      right: 30%; /* Adjusted to stay closer to the right */
       transform: translateY(-50%);
       background: rgba(255, 255, 255, 0.8);
       padding: 15px;
@@ -92,8 +92,8 @@
     .attr("viewBox", `0 0 ${width} ${height}`);
 
   Promise.all([
-    d3.json("data/geo.json"),
-    d3.csv("data/population.csv")
+    d3.json("geo.json"),
+    d3.csv("population.csv")
   ]).then(([geoData, popData]) => {
     geoData.features.forEach(d => {
       const subzone = popData.find(e => e.Subzone.toUpperCase() === d.properties.Name);

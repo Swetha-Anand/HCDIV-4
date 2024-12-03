@@ -28,7 +28,7 @@
 <body>
 
 <svg width="1000" height="600" viewBox="0 0 1000 600"></svg>
-<div id="info"></div> <!-- Info box for population on hover -->
+<div id="info"></div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
@@ -38,8 +38,8 @@
     .attr("viewBox", `0 0 ${width} ${height}`);
 
   Promise.all([
-    d3.json("data/sgmap.json"),   // Adjusted for data files hosted locally
-    d3.csv("data/population2023.csv")
+    d3.json("data/geo.json"),
+    d3.csv("data/population.csv")
   ]).then(data => {
     let mapData = data[0].features;
     let popData = data[1];
